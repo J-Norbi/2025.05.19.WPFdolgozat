@@ -20,12 +20,11 @@ namespace _2025._05._19.WPFdolgozat
     /// </summary>
     public partial class MainWindow : Window
     {
-        ServerConnection connection;
+        ServerConnection connection = new ServerConnection("http://127.1.1.1:3000");
         List<Mushroom> allMushroom = new List<Mushroom>();
         public MainWindow()
         {
             InitializeComponent();
-            this.connection = connection;
             Start();
         }
         async void Start()

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _2025._05._19.WPFdolgozat
 {
-    internal class Mushroom
+    public class Mushroom
     {
         public Mushroom() {}
         public int id { get; set; }
