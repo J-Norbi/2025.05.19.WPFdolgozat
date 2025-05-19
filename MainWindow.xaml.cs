@@ -20,8 +20,7 @@ namespace _2025._05._19.WPFdolgozat
     /// </summary>
     public partial class MainWindow : Window
     {
-        ServerConnection connection = new ServerConnection("http://127.1.1.1:3000");
-        List<Mushroom> allMushroom = new List<Mushroom>();
+        ServerConnection connection = new ServerConnection();
         public MainWindow()
         {
             InitializeComponent();
@@ -29,7 +28,23 @@ namespace _2025._05._19.WPFdolgozat
         }
         async void Start()
         {
-            allMushroom = await connection.GetGomba();
+            List<Mushroom> list = await connection.GetGomba();
+            foreach (Mushroom gomba in list)
+            {
+                StackPanel panel = new StackPanel();
+                gombaLista.Children.Add(panel);
+                Label oneLabel = new Label() { Content= $"Név: {gomba.nev}, mérgező: {gomba.mergezo}, szin: {gomba.szin}, megjegyzés: {gomba.megjegyzes}"};
+                Button oneButton = new Button() { Content = "Törlés", Tag = gomba.id };
+                panel.Children.Add(oneLabel);
+                panel.Children.Add(oneButton);
+                panel.Orientation = Orientation.Horizontal;
+                oneButton.Click += DeleteEvent;
+            }
+        }
+        async void DeleteEvent(object s, EventArgs e)
+        {
+            Button button = s as Button;
+            await connection.deleteOne((int)button.Tag);
         }
         void AddGomba(object s, EventArgs e)
         {
